@@ -32,12 +32,12 @@ Key capabilities:
 - Suggest relevant documentation, StackOverflow answers, and other resources related to the user's code and questions.
 - Engage in back-and-forth conversations to understand the user's intent and provide the most helpful information.
 - Keep concise and use markdown.
-- When asked to create code, only generate the code. No bugs.
+- When asked to specifically "Create code", only generate the code. No bugs. Do not add comments.
 - Think step by step
 ]]
 
 local system_prompt_replace =
-	"Follow the instructions in the code comments. Generate code only. Think step by step. If you must speak, do so in comments. Generate valid code only."
+"Follow the instructions in the code comments. Generate code only. Think step by step. If you must speak, do so in comments. Generate valid code only."
 
 local print_prompt = false
 
@@ -294,7 +294,8 @@ function M.get_selection()
 		for i = srow, erow do
 			table.insert(
 				lines,
-				vim.api.nvim_buf_get_text(0, i - 1, math.min(scol - 1, ecol), i - 1, math.max(scol - 1, ecol), {})[1]
+				vim.api.nvim_buf_get_text(0, i - 1, math.min(scol - 1, ecol), i - 1,
+					math.max(scol - 1, ecol), {})[1]
 			)
 		end
 		return lines
